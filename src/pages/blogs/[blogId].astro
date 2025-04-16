@@ -1,0 +1,27 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getBlogDetail, getBlogs } from "../../libs/microcms";
+import type { APIContext } from "astro";
+
+// getStaticPaths：ビルド時に生成するパスを指定
+export async function getStaticPaths() {
+  const { contents } = await getBlogs(); // 全ブログを取得
+  return contents.map((blog) => ({
+    params: { blogId: blog.id },
+    props: { blog }, // 必要ならここでデータ渡すこともできる
+  }));
+}
+
+// ページごとの処理
+const { params } = Astro;
+const blog = await getBlogDetail(params.blogId);
+---
+
+<Layout>
+  <article>
+    <h1>{blog.title}</h1>
+    <p>{new Date(blog.publishedAt).toLocaleDateString()}</p>
+    <img src={blog.eyecatch.url} alt={blog.title} width="600" />
+    <div set:html={blog.content} />
+  </article>
+</Layout>

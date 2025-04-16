@@ -1,11 +1,28 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+// microcms.ts から関数をインポート
+import Layout from "../layouts/Layout.astro";
+import { getBlogs } from "../libs/microcms";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+// 投稿データを取得
+const { contents: blogs } = await getBlogs();
 ---
 
+<!-- 投稿一覧を表示 -->
 <Layout>
-	<Welcome />
+  <main>
+    <h1>最新の投稿</h1>
+    <ul>
+      {
+        blogs.map((blog) => (
+          <li>
+            <a href={`/blogs/${blog.id}`}>
+              <img src={blog.eyecatch.url} alt={blog.title} width="300" />
+              <h2>{blog.title}</h2>
+              <p>{new Date(blog.publishedAt).toLocaleDateString()}</p>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </main>
 </Layout>
