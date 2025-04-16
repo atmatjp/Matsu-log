@@ -2,6 +2,7 @@
 // microcms.ts から関数をインポート
 import Layout from "../layouts/Layout.astro";
 import { getBlogs } from "../libs/microcms";
+import "../styles/blog.css";
 
 // 投稿データを取得
 const { contents: blogs } = await getBlogs();
@@ -15,14 +16,16 @@ const { contents: blogs } = await getBlogs();
       <ul>
         {
           blogs.map((blog) => (
-            <li>
-              <a href={`/blogs/${blog.id}`}>
-                <img src={blog.eyecatch.url} alt={blog.title} width="300" />
-                <h2>{blog.title}</h2>
-                <p>{"#" + blog.category.name}</p>
-                <p>{new Date(blog.publishedAt).toLocaleDateString()}</p>
-              </a>
-            </li>
+            <div class="blog-list">
+              <li>
+                <a href={`/blogs/${blog.id}`}>
+                  <img src={blog.eyecatch.url} alt={blog.title} width="300" />
+                  <h2>{blog.title}</h2>
+                  <p>{"#" + blog.category.name}</p>
+                  <p>{new Date(blog.publishedAt).toLocaleDateString()}</p>
+                </a>
+              </li>
+            </div>
           ))
         }
       </ul>
