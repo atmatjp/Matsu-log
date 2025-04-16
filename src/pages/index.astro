@@ -10,9 +10,9 @@ const { contents: blogs } = await getBlogs();
 
 <!-- 投稿一覧を表示 -->
 <Layout title="トップページ">
-  <div class="content">
+  <div class="content" data-pagefind-ignore="all">
     <main>
-      <h1>最新の投稿</h1>
+      <h1>最新の更新</h1>
       <ul>
         {
           blogs.map((blog) => (
@@ -21,7 +21,7 @@ const { contents: blogs } = await getBlogs();
                 <a href={`/blogs/${blog.id}`}>
                   <img src={blog.eyecatch.url} alt={blog.title} width="300" />
                   <h2>{blog.title}</h2>
-                  <p>{"#" + blog.category.name}</p>
+                  <p>{blog.category ? "#" + blog.category.name : ""}</p>{" "}
                   <p>{new Date(blog.publishedAt).toLocaleDateString()}</p>
                 </a>
               </li>

@@ -1,0 +1,41 @@
+---
+import "@pagefind/default-ui/css/ui.css";
+import "../../public/pagefind/pagefind-modular-ui.css";
+---
+
+<div class="search"></div>
+
+<script>
+  import { PagefindUI } from "@pagefind/default-ui";
+
+  new PagefindUI({
+    element: ".search",
+    pageSize: 10,
+    excerptLength: 50,
+    showSubResults: false,
+    showImages: false,
+    translations: {
+      placeholder: "検索",
+      clear_search: "クリア",
+      load_more: "More",
+      search_label: "",
+      zero_results: "「[SEARCH_TERM]」に一致する記事は見つかりませんでした",
+      many_results: "「[SEARCH_TERM]」の検索結果（[COUNT] 件）",
+      one_result: "「[SEARCH_TERM]」の検索結果（[COUNT] 件）",
+      searching: "「[SEARCH_TERM]」を検索しています...",
+    },
+    debounceTimeoutMs: 300,
+  });
+</script>
+<style>
+  .search {
+    transition-duration: 300ms;
+    background: var(--bg-color);
+    border-radius: 10px;
+    padding: 8px;
+  }
+
+  .search:not(:has(.pagefind-ui__hidden)) {
+    border-radius: 16px;
+  }
+</style>
